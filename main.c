@@ -38,7 +38,9 @@ ListeVols* L = initialiserListe();
                 printf("Au revoir !\n");
                 break;
             default:
+                system("cls");
                 printf("Choix invalide. Veuillez reessayer.\n");
+                sleep(1);
                 break;
         }
 
