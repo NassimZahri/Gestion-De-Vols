@@ -40,7 +40,7 @@ ListeVols* L = initialiserListe();
             default:
                 system("cls");
                 printf("Choix invalide. Veuillez reessayer.\n");
-                sleep(1);
+                sleep(1.5);
                 break;
         }
 
