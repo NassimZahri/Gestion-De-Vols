@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <conio.h>
 #include "lib.h"
 
 int main(){
@@ -8,6 +10,7 @@ ListeVols* L = initialiserListe();
     int choix;
 
     do {
+        system("cls");
         printf("\n=== MENU ===\n");
         printf("1. Ajouter un vol\n");
         printf("2. Supprimer un vol\n");
@@ -35,7 +38,9 @@ ListeVols* L = initialiserListe();
                 printf("Au revoir !\n");
                 break;
             default:
+                system("cls");
                 printf("Choix invalide. Veuillez reessayer.\n");
+                sleep(1);
                 break;
         }
 

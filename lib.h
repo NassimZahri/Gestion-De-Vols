@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <conio.h>
 
 
 ///     STRUCTURES:      ///
@@ -72,6 +74,8 @@ ListeVols* initialiserListe() {
 }
 
 void ajouterVol(ListeVols* L) {
+
+    system("cls");
 
     Vol* nouveauVol = (Vol*)malloc(sizeof(Vol));
 
@@ -169,11 +173,17 @@ void ajouterVol(ListeVols* L) {
     }
 
     L->nombre_vols++;
+
+    system("cls");
+    printf("\n\n Vol Ajoutee !");
+    sleep(3);
 }
 
 
 void supprimerVol(ListeVols* L, int numero_vol) {
-    // Check if the list is empty
+    
+    system("cls");
+
     if (L->tete == NULL) {
         printf("La liste de vols est vide.\n");
         return;
@@ -181,7 +191,7 @@ void supprimerVol(ListeVols* L, int numero_vol) {
 
     Vol* volCourant = L->tete;
 
-    // Find the flight with the specified flight number
+    
     while (volCourant != NULL) {
         if (volCourant->numero_vol == numero_vol) {
 
@@ -209,8 +219,9 @@ void supprimerVol(ListeVols* L, int numero_vol) {
 
             // Liberer la memoire
             free(volCourant);
-
-            printf("Vol avec le numero %d supprime avec succes.\n", numero_vol);
+            system("cls");
+            printf("\nVol avec le numero %d supprime avec succes.\n", numero_vol);
+            sleep(3);
             L->nombre_vols--;
             return;
         }
@@ -223,12 +234,16 @@ void supprimerVol(ListeVols* L, int numero_vol) {
 }
 
 void afficherVols(ListeVols* L) {
+    char cont;
+
     if (L->tete == NULL) {
         printf("La liste des vols est vide.\n");
         return;
     }
 
     Vol* volCourant = L->tete;
+
+    system("cls");
 
     while (volCourant != NULL) {
         printf("\n--- VOL %d ---\n", volCourant->numero_vol);
@@ -253,9 +268,16 @@ void afficherVols(ListeVols* L) {
             printf("Role de l'equipage: %s", volCourant->equipage[i].role);
             printf("Matricule de l'equipage: %d\n", volCourant->equipage[i].matricule);
         }
+        printf("\n===============================================\n");
 
         volCourant = volCourant->suivant;
     }
+    
+    printf("\n**appuyer n'importe quelle touche pour revenir au menu.");
+    while (!kbhit()) {}
+    getch();
+    fflush(stdin);
+
 }
 
 
