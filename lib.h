@@ -32,6 +32,12 @@ typedef struct avion {
     char model[10];
 }avion;
 
+typedef struct prix{
+    float eco; 
+    float bus;
+    float pre;
+}prix;
+
 // Structure représentant un vol
 typedef struct Vol {
     int numero_vol;
@@ -49,6 +55,7 @@ typedef struct Vol {
     avion av;
     crew *equipage;
     int nbr_crew;
+    prix prix_vol;
     struct Vol* precedent;
     struct Vol* suivant;
 } Vol;
@@ -112,6 +119,16 @@ void ajouterVol(ListeVols* L) {
     printf("Statut: ");
     fflush(stdin);
     fgets(nouveauVol->status, sizeof(nouveauVol->status), stdin);
+
+    printf("\n--- TARIFS :\n");
+    printf("Economique: ");
+    scanf("%f", &(nouveauVol->prix_vol.eco));
+
+    printf("Business: ");
+    scanf("%f", &(nouveauVol->prix_vol.bus));
+
+    printf("Premiere Class: ");
+    scanf("%f", &(nouveauVol->prix_vol.pre));
 
     printf("\n--- INFORMATIONS SUR L'AVION :\n");
 
@@ -268,6 +285,12 @@ void afficherVols(ListeVols* L) {
                     printf("Gate: %s\n", volCourant->gate);
                     printf("Terminal: %d\n", volCourant->terminal);
                     printf("Statut: %s\n", volCourant->status);
+                   
+                    printf("\n--- TARIFS :\n");
+                    printf("Economique: %.2f\n",volCourant->prix_vol.eco);
+                    printf("Business: %.2f\n",volCourant->prix_vol.bus);
+                    printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+                    
 
                     printf("\n--- INFORMATIONS SUR L'AVION ---\n");
                     printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
@@ -411,6 +434,11 @@ void modifierVol(ListeVols* L, int numero_vol) {
             printf("Terminal: %d\n", volCourant->terminal);
             printf("Statut: %s\n", volCourant->status);
 
+            printf("\n--- TARIFS :\n");
+            printf("Economique: %.2f\n",volCourant->prix_vol.eco);
+            printf("Business: %.2f\n",volCourant->prix_vol.bus);
+            printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+
             printf("\n--- INFORMATIONS SUR L'AVION ---\n");
             printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
             printf("Model de l'avion: %s\n", volCourant->av.model);
@@ -457,6 +485,16 @@ void modifierVol(ListeVols* L, int numero_vol) {
     printf("Statut: ");
     fflush(stdin);
     fgets(volCourant->status, sizeof(volCourant->status), stdin);
+
+    printf("\n--- TARIFS :\n");
+    printf("Economique: ");
+    scanf("%f", &(volCourant->prix_vol.eco));
+
+    printf("Business: ");
+    scanf("%f", &(volCourant->prix_vol.bus));
+
+    printf("Premiere Class: ");
+    scanf("%f", &(volCourant->prix_vol.pre));
 
     printf("\n--- INFORMATIONS SUR L'AVION :\n");
 
@@ -513,6 +551,11 @@ void modifierVol(ListeVols* L, int numero_vol) {
             printf("Gate: %s\n", volCourant->gate);
             printf("Terminal: %d\n", volCourant->terminal);
             printf("Statut: %s\n", volCourant->status);
+
+            printf("\n--- TARIFS :\n");
+            printf("Economique: %.2f\n",volCourant->prix_vol.eco);
+            printf("Business: %.2f\n",volCourant->prix_vol.bus);
+            printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
 
             printf("\n--- INFORMATIONS SUR L'AVION ---\n");
             printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
