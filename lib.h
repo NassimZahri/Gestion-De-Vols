@@ -67,7 +67,7 @@ typedef struct ListeVols {
     struct Vol* queue;
     int nombre_vols;
     char admin_id[10];
-    char admin_pwd[10];
+    char admin_pwd[20];
 }ListeVols;
 
 ///     FONCTIONS:      ///
@@ -403,10 +403,12 @@ void afficherVols(ListeVols* L) {
         }
 
         if (choix != 4) {
-            printf("\nVoulez-vous continuer ? (O/N) : ");
-            scanf(" %c", &cont);
+            printf("\n**appuyer sur n'importe quelle touche pour revenir.");
+            while (!kbhit()) {}
+            getch();
+            fflush(stdin);
         }
-    } while (choix != 4 && (cont == 'O' || cont == 'o'));
+    } while (choix != 4 /*&& (cont == 'O' || cont == 'o')*/);
 }
 
 void modifierVol(ListeVols* L, int numero_vol) {
@@ -573,7 +575,7 @@ void modifierVol(ListeVols* L, int numero_vol) {
 
 
             printf("\nLe vol a ete modifie avec succes.\n");
-            printf("\n**appuyer n'importe quelle touche pour revenir au menu.");
+            printf("\n**appuyer sur n'importe quelle touche pour revenir au menu.");
             while (!kbhit()) {}
             getch();
             fflush(stdin);
@@ -585,7 +587,38 @@ void modifierVol(ListeVols* L, int numero_vol) {
     printf("Le vol avec le numero %d n'a pas ete trouve.\n", numero_vol);
 }
 
+void afficherVolsClient(ListeVols* L) {
+    if (L->tete == NULL) {
+        printf("La liste des vols est vide.\n");
+        return;
+    }
 
+    Vol* volCourant = L->tete;
+
+
+    printf("VOL\tCompagnie\t\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\t");
+
+    while (volCourant != NULL) {
+        printf("%d\t", volCourant->numero_vol);
+        printf("%s", volCourant->compagnie);
+        printf("%s", volCourant->depart);
+        printf("%s", volCourant->destination);
+        printf("%s", volCourant->date_vol);
+        printf("%s", volCourant->heure_depart);
+        printf("%s", volCourant->heure_arrivee);
+
+        printf("\n--- INFORMATIONS SUR L'AVION ---\n");
+        printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
+        printf("Model de l'avion: %s", volCourant->av.model);
+
+        printf("\n--- TARIFS :\n");
+        printf("Economique: %.2f\t",volCourant->prix_vol.eco);
+        printf("Business: %.2f\t",volCourant->prix_vol.bus);
+        printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+
+        volCourant = volCourant->suivant;
+    }
+}
 
 
 
