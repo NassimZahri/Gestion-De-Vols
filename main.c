@@ -18,8 +18,8 @@ void adminMenu(ListeVols* L) {
         printf("2. Supprimer un vol\n");
         printf("3. Modifier un vol\n");
         printf("4. Affichage des vols\n");
-        printf("5. Quitter\n");
-        printf("Choix : ");
+        printf("\n0. Retourner au menu principale\n");
+        printf("\nChoix : ");
         scanf("%d", &choix);
 
         switch (choix) {
@@ -44,7 +44,7 @@ void adminMenu(ListeVols* L) {
             case 4:
                 afficherVols(L);
                 break;
-            case 5:
+            case 0:
                 printf("Au revoir !\n");
                 break;
             default:
@@ -54,7 +54,7 @@ void adminMenu(ListeVols* L) {
                 break;
         }
 
-    } while (choix != 5);
+    } while (choix != 0);
 }
 
 void userMenu(ListeVols* L) {
@@ -64,15 +64,15 @@ void userMenu(ListeVols* L) {
         system("cls");
         printf("\n=== USER MENU ===\n");
         printf("1. Afficher Vols\n");
-        printf("2. Quitter\n");
-        printf("Choix : ");
+        printf("\n0. Retourner au menu principale\n");
+        printf("\nChoix : ");
         scanf("%d", &choix);
 
         switch (choix) {
             case 1:
                 afficherVolsClient(L);
                 break;
-            case 2:
+            case 0:
                 printf("Au revoir !\n");
                 break;
             default:
@@ -82,7 +82,7 @@ void userMenu(ListeVols* L) {
                 break;
         }
 
-    } while (choix != 2);
+    } while (choix != 0);
 }
 
 int main() {
@@ -95,8 +95,8 @@ int main() {
         printf("\n=== MAIN MENU ===\n");
         printf("1. Admin\n");
         printf("2. Normal User\n");
-        printf("3. Quitter\n");
-        printf("Choix : ");
+        printf("\n0. Quitter\n");
+        printf("\nChoix : ");
         scanf("%d", &choix);
 
         switch (choix) {
@@ -121,7 +121,7 @@ int main() {
             case 2:
                 userMenu(L);
                 break;
-            case 3:
+            case 0:
                 printf("Au revoir !\n");
                 break;
             default:
@@ -131,7 +131,7 @@ int main() {
                 break;
         }
 
-    } while (choix != 3);
+    } while (choix != 0);
 
     // Free memory and clean up
     // ...
