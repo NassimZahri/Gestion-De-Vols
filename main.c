@@ -20,8 +20,8 @@ void adminMenu(ListeVols* L) {
         printf("4. Modifier statut d'un vol\n");
         printf("\n5. Affichage des vols\n");
         printf("\n6. Affichage des passager\n");
-        printf("7.  Exclure un Passager \n");
-        printf("8.  Trouver un Passager \n");
+        printf("7. Exclure un Passager \n");
+        printf("8. Trouver un Passager \n");
         printf("\n0. Retourner au menu principale\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
@@ -31,6 +31,7 @@ void adminMenu(ListeVols* L) {
                 ajouterVol(L);
                 break;
             case 2: {
+                system("cls");
                 int numero_vol;
                 printf("Numero de vol a supprimer : ");
                 scanf("%d", &numero_vol);
@@ -52,6 +53,7 @@ void adminMenu(ListeVols* L) {
                 afficherVols(L);
                 break;
             case 6: {
+                system("cls");
                 int num;
                 printf("Entrez le numero de vol : ");
                 scanf("%d", &num);
@@ -59,15 +61,17 @@ void adminMenu(ListeVols* L) {
                 break;
             }
             case 7: {
+                system("cls");
                 int numV,numP;
                 printf("Entrez le numero de vol : ");
                 scanf("%d", &numV);
-                printf("Entrew le numero de passager : ");
+                printf("Entrez le numero de passager : ");
                 scanf("%d", &numP);
                 supprimerPassager(L,numV,numP);
                 break;
             }
             case 8: {
+                system("cls");
                 int numP;
                 printf("Entrez le numero de passager : ");
                 scanf("%d", &numP);
@@ -76,7 +80,6 @@ void adminMenu(ListeVols* L) {
             }
             
             case 0:
-                printf("Au revoir !\n");
                 break;
             default:
                 system("cls");
@@ -96,6 +99,7 @@ void userMenu(ListeVols* L) {
         printf("\n=== USER MENU ===\n");
         printf("1. Afficher Vols\n");
         printf("2. Reserver un Vol\n");
+        printf("3. Annuler mon Reservation\n");
         printf("\n0. Retourner au menu principale\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
@@ -105,15 +109,24 @@ void userMenu(ListeVols* L) {
                 afficherVolsClient(L);
                 break;
             case 2: {
+                system("cls");
                 char destination[50];
                 printf("Entrez la destination : ");
                 scanf("%s", destination);
                 reserverVol(L, destination);
                 break;
             }
-
+            case 3: {
+                system("cls");
+                int numV,numP;
+                printf("Entrez le numero de vol : ");
+                scanf("%d", &numV);
+                printf("Entrez votre numero de passager : ");
+                scanf("%d", &numP);
+                supprimerPassager(L,numV,numP);
+                break;
+            }
             case 0:
-                printf("Au revoir !\n");
                 break;
             default:
                 system("cls");
@@ -134,7 +147,7 @@ int main() {
         system("cls");
         printf("\n=== MAIN MENU ===\n");
         printf("1. Admin\n");
-        printf("2. Normal User\n");
+        printf("2. Utilisateur Normal\n");
         printf("\n0. Quitter\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
@@ -143,8 +156,8 @@ int main() {
             case 1: {
                 char admin_id[20];
                 char admin_pwd[20];
-
-                printf("Admin ID: ");
+                system("cls");
+                printf("\nAdmin ID: ");
                 scanf("%s", admin_id);
                 printf("Password: ");
                 scanf("%s", admin_pwd);
@@ -162,7 +175,9 @@ int main() {
                 userMenu(L);
                 break;
             case 0:
-                printf("Au revoir !\n");
+                system("cls");
+                printf("\n\tAu revoir !\n\n");
+                sleep(1.5);
                 break;
             default:
                 system("cls");
@@ -173,7 +188,9 @@ int main() {
 
     } while (choix != 0);
 
-    
+
+    //liberer la memoire
+    free(L);
 
     return 0;
 }

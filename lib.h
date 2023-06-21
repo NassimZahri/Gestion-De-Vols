@@ -223,7 +223,9 @@ void supprimerVol(ListeVols* L, int numero_vol) {
     system("cls");
 
     if (L->tete == NULL) {
+        system("cls");
         printf("La liste de vols est vide.\n");
+        sleep(1.5);
         return;
     }
 
@@ -277,7 +279,9 @@ void afficherVols(ListeVols* L) {
     char cont;
 
     if (L->tete == NULL) {
+        system("cls");
         printf("La liste des vols est vide.\n");
+        sleep(1.5);
         return;
     }
 
@@ -289,7 +293,7 @@ void afficherVols(ListeVols* L) {
         printf("2. Afficher un vol par numero\n");
         printf("3. Afficher les vols par date\n");
         printf("\n0. Retour\n");
-        printf("Choix : ");
+        printf("\nChoix : ");
         scanf("%d", &choix);
 
         switch (choix) {
@@ -379,7 +383,9 @@ void afficherVols(ListeVols* L) {
                 }
 
                 if (volCourant == NULL) {
+                    system("cls");
                     printf("Vol avec le numero %d non trouve.\n", numero_vol);
+                    sleep(1.5);
                 }
                 break;
             }
@@ -431,7 +437,9 @@ void afficherVols(ListeVols* L) {
                 }
 
                 if (!found) {
+                    system("cls");
                     printf("Aucun vol trouve pour la date %s.\n", date);
+                    sleep(1.5);
                 }
                 break;
             }
@@ -459,7 +467,9 @@ void modifierVol(ListeVols* L, int numero_vol) {
     system("cls");
 
     if (L->tete == NULL) {
+        system("cls");
         printf("La liste des vols est vide.\n");
+        sleep(1.5);
         return;
     }
 
@@ -494,8 +504,8 @@ void modifierVol(ListeVols* L, int numero_vol) {
                 for (int i = 0; i < volCourant->nbr_crew; i++) {
                     printf("Membre %d:\n", i + 1);
                     printf("Nom: %s", volCourant->equipage[i].nom_complet);
-                    printf("Role: %s", volCourant->equipage[i].role);
-                    printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
+                    printf("\nRole: %s", volCourant->equipage[i].role);
+                    printf("\nMatricule: %d\n\n", volCourant->equipage[i].matricule);
                 }
                 printf("\n===============================================\n");
 
@@ -638,8 +648,8 @@ void modifierVol(ListeVols* L, int numero_vol) {
             for (int i = 0; i < volCourant->nbr_crew; i++) {
                 printf("Membre %d:\n", i + 1);
                 printf("Nom: %s", volCourant->equipage[i].nom_complet);
-                printf("Role: %s", volCourant->equipage[i].role);
-                printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
+                printf("\nRole: %s", volCourant->equipage[i].role);
+                printf("\nMatricule: %d\n\n", volCourant->equipage[i].matricule);
             }
             printf("\n===============================================\n");
 
@@ -654,8 +664,9 @@ void modifierVol(ListeVols* L, int numero_vol) {
         }
         volCourant = volCourant->suivant;
     }
-
+    system("cls");
     printf("Le vol avec le numero %d n'a pas ete trouve.\n", numero_vol);
+    sleep(1.5);
 }
 
 Vol* trouverVol(ListeVols* L, int numero_vol);
@@ -713,7 +724,9 @@ void modifierStatusVol(ListeVols *L) {
 
 void afficherVolsClient(ListeVols* L) {
     if (L->tete == NULL) {
+        system("cls");
         printf("La liste des vols est vide.\n");
+        sleep(1.5);
         return;
     }
     Vol* volCourant = L->tete;
@@ -753,7 +766,9 @@ void afficherVolsClient(ListeVols* L) {
 int afficherVolsDestination(ListeVols* L, char destination[]) {
     int found = 0;
     if (L->tete == NULL) {
+        system("cls");
         printf("La liste des vols est vide.\n");
+        sleep(1.5);
         return 0;
     }
     Vol* volCourant = L->tete;
@@ -1019,9 +1034,11 @@ void reserverVol(ListeVols* L, char *destination) {
 
 
 void afficherPassagers(ListeVols *L, int num){
+
+    system("cls");
     Vol *volCourant = L->tete;
     while (volCourant != NULL) {
-        if (volCourant->numero_vol == num && volCourant->nbr_passagers>0) {
+        if (volCourant->numero_vol == num /*&& volCourant->nbr_passagers>0*/) {
             break;
         }
         volCourant = volCourant->suivant;
@@ -1093,7 +1110,7 @@ void supprimerPassager(ListeVols* L, int numero_vol, int num_passager) {
 
     int index = -1;
     for (int i = 0; i < vol->nbr_passagers; i++) {
-        if (vol->Passager[i].num_passager == num_passager) {
+        if (vol->Passager[i].num_passager == num_passager ) {
             index = i;
             break;
         }
@@ -1149,7 +1166,9 @@ void trouverPassager(ListeVols* L, int num_passager) {
 
     
     if (!found) {
+        system("cls");
         printf("Passager introuvable dans tous les vols.\n");
+        sleep(1.5);
     }
 
     printf("\n** Appuyez sur n'importe quelle touche pour revenir.");
