@@ -145,6 +145,7 @@ void ajouterVol(ListeVols* L) {
     printf("Model de l'avion: ");
     fflush(stdin);
     fgets(nouveauVol->av.model, sizeof(nouveauVol->av.model), stdin);
+    fflush(stdin);
 
     printf("\n--- INFORMATIONS SUR L'EQUIPAGE :\n");
 
@@ -192,7 +193,8 @@ void ajouterVol(ListeVols* L) {
     }
     nouveauVol->nbr_crew = count;
 
-    nouveauVol->nbr_passagers = 0;  // Initialize the number of passengers to 0
+    nouveauVol->nbr_passagers = 0;  // initialiser le nombre de passagers
+    nouveauVol->Passager = NULL;
 
 
     nouveauVol->precedent = NULL;
@@ -257,7 +259,7 @@ void supprimerVol(ListeVols* L, int numero_vol) {
             free(volCourant);
             system("cls");
             printf("\nVol avec le numero %d supprime avec succes.\n", numero_vol);
-            sleep(3);
+            sleep(1.5);
             L->nombre_vols--;
             return;
         }
@@ -266,7 +268,9 @@ void supprimerVol(ListeVols* L, int numero_vol) {
     }
 
     // not found
+    system("cls");
     printf("Vol avec le numero %d non trouve.\n", numero_vol);
+    sleep(1.5);
 }
 
 void afficherVols(ListeVols* L) {
@@ -284,7 +288,7 @@ void afficherVols(ListeVols* L) {
         printf("1. Afficher tous les vols\n");
         printf("2. Afficher un vol par numero\n");
         printf("3. Afficher les vols par date\n");
-        printf("4. Retour\n");
+        printf("\n0. Retour\n");
         printf("Choix : ");
         scanf("%d", &choix);
 
@@ -297,7 +301,7 @@ void afficherVols(ListeVols* L) {
                     printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
                     printf("%-8d", volCourant->numero_vol);
                     printf("%-15s", volCourant->compagnie);
-                    printf("%-10s", volCourant->depart);
+                    printf("%-15s", volCourant->depart);
                     printf("%-15s", volCourant->destination);
                     printf("%-15s", volCourant->date_vol);
                     printf("%-16s", volCourant->heure_depart);
@@ -307,21 +311,21 @@ void afficherVols(ListeVols* L) {
                     printf("Statut: %s\n", volCourant->status);
                    
                     printf("--- TARIFS :\n");
-                    printf("Economique: %.2f\n",volCourant->prix_vol.eco);
-                    printf("Business: %.2f\n",volCourant->prix_vol.bus);
+                    printf("Economique: %.2f\t",volCourant->prix_vol.eco);
+                    printf("Business: %.2f\t\t",volCourant->prix_vol.bus);
                     printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
                     
 
-                    printf("--- INFORMATIONS SUR L'AVION ---\n");
+                    printf("\n--- INFORMATIONS SUR L'AVION ---\n");
                     printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
                     printf("Model de l'avion: %s\n", volCourant->av.model);
 
                     printf("\n--- INFORMATIONS SUR L'EQUIPAGE ---\n");
                     for (int i = 0; i < volCourant->nbr_crew; i++) {
-                        printf("\nMembre %d:", i + 1);
+                        printf("Membre %d:\n", i + 1);
                         printf("Nom: %s", volCourant->equipage[i].nom_complet);
                         printf("Role: %s", volCourant->equipage[i].role);
-                        printf("Matricule: %d", volCourant->equipage[i].matricule);
+                        printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
                     }
                     printf("\n===============================================\n");
                     volCourant = volCourant->suivant;
@@ -340,7 +344,7 @@ void afficherVols(ListeVols* L) {
                         printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
                         printf("%-8d", volCourant->numero_vol);
                         printf("%-15s", volCourant->compagnie);
-                        printf("%-10s", volCourant->depart);
+                        printf("%-15s", volCourant->depart);
                         printf("%-15s", volCourant->destination);
                         printf("%-15s", volCourant->date_vol);
                         printf("%-16s", volCourant->heure_depart);
@@ -348,17 +352,23 @@ void afficherVols(ListeVols* L) {
                         printf("Gate: %s\t", volCourant->gate);
                         printf("Terminal: %d\t", volCourant->terminal);
                         printf("Statut: %s\n", volCourant->status);
+                    
+                        printf("--- TARIFS :\n");
+                        printf("Economique: %.2f\t",volCourant->prix_vol.eco);
+                        printf("Business: %.2f\t\t",volCourant->prix_vol.bus);
+                        printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+                        
 
-                        printf("--- INFORMATIONS SUR L'AVION ---\n");
+                        printf("\n--- INFORMATIONS SUR L'AVION ---\n");
                         printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
                         printf("Model de l'avion: %s\n", volCourant->av.model);
 
                         printf("\n--- INFORMATIONS SUR L'EQUIPAGE ---\n");
                         for (int i = 0; i < volCourant->nbr_crew; i++) {
-                            printf("\nMembre %d:", i + 1);
+                            printf("Membre %d:\n", i + 1);
                             printf("Nom: %s", volCourant->equipage[i].nom_complet);
                             printf("Role: %s", volCourant->equipage[i].role);
-                            printf("Matricule: %d", volCourant->equipage[i].matricule);
+                            printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
                         }
                         printf("\n===============================================\n");
                         break;
@@ -382,10 +392,9 @@ void afficherVols(ListeVols* L) {
                 int found = 0;
                 while (volCourant != NULL) {
                     if (strcmp(volCourant->date_vol, date) == 0) {
-                        printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
                         printf("%-8d", volCourant->numero_vol);
                         printf("%-15s", volCourant->compagnie);
-                        printf("%-10s", volCourant->depart);
+                        printf("%-15s", volCourant->depart);
                         printf("%-15s", volCourant->destination);
                         printf("%-15s", volCourant->date_vol);
                         printf("%-16s", volCourant->heure_depart);
@@ -393,17 +402,23 @@ void afficherVols(ListeVols* L) {
                         printf("Gate: %s\t", volCourant->gate);
                         printf("Terminal: %d\t", volCourant->terminal);
                         printf("Statut: %s\n", volCourant->status);
+                    
+                        printf("--- TARIFS :\n");
+                        printf("Economique: %.2f\t",volCourant->prix_vol.eco);
+                        printf("Business: %.2f\t\t",volCourant->prix_vol.bus);
+                        printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+                        
 
-                        printf("--- INFORMATIONS SUR L'AVION ---\n");
+                        printf("\n--- INFORMATIONS SUR L'AVION ---\n");
                         printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
                         printf("Model de l'avion: %s\n", volCourant->av.model);
 
                         printf("\n--- INFORMATIONS SUR L'EQUIPAGE ---\n");
                         for (int i = 0; i < volCourant->nbr_crew; i++) {
-                            printf("\nMembre %d:", i + 1);
+                            printf("Membre %d:\n", i + 1);
                             printf("Nom: %s", volCourant->equipage[i].nom_complet);
                             printf("Role: %s", volCourant->equipage[i].role);
-                            printf("Matricule: %d", volCourant->equipage[i].matricule);
+                            printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
                         }
                         printf("\n===============================================\n");
 
@@ -417,7 +432,7 @@ void afficherVols(ListeVols* L) {
                 }
                 break;
             }
-            case 4:
+            case 0:
                 break;
             default:
                 printf("Choix invalide. Veuillez reessayer.\n");
@@ -428,13 +443,13 @@ void afficherVols(ListeVols* L) {
                 break;
         }
 
-        if (choix != 4) {
+        if (choix != 0) {
             printf("\n**appuyer sur n'importe quelle touche pour revenir.");
             while (!kbhit()) {}
             getch();
             fflush(stdin);
         }
-    } while (choix != 4 /*&& (cont == 'O' || cont == 'o')*/);
+    } while (choix != 0 /*&& (cont == 'O' || cont == 'o')*/);
 }
 
 void modifierVol(ListeVols* L, int numero_vol) {
@@ -450,36 +465,35 @@ void modifierVol(ListeVols* L, int numero_vol) {
     while (volCourant != NULL) {
         if (volCourant->numero_vol == numero_vol) {
             // avant modification
-            printf("\n--- DETAILS DU VOL AVANT MODIFICATION ---\n");
-            printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
-            printf("%-8d", volCourant->numero_vol);
-            printf("%-15s", volCourant->compagnie);
-            printf("%-10s", volCourant->depart);
-            printf("%-15s", volCourant->destination);
-            printf("%-15s", volCourant->date_vol);
-            printf("%-16s", volCourant->heure_depart);
-            printf("%s\n", volCourant->heure_arrivee);
-            printf("Gate: %s\t", volCourant->gate);
-            printf("Terminal: %d\t", volCourant->terminal);
-            printf("Statut: %s\n", volCourant->status);
+                printf("%-8d", volCourant->numero_vol);
+                printf("%-15s", volCourant->compagnie);
+                printf("%-15s", volCourant->depart);
+                printf("%-15s", volCourant->destination);
+                printf("%-15s", volCourant->date_vol);
+                printf("%-16s", volCourant->heure_depart);
+                printf("%s\n", volCourant->heure_arrivee);
+                printf("Gate: %s\t", volCourant->gate);
+                printf("Terminal: %d\t", volCourant->terminal);
+                printf("Statut: %s\n", volCourant->status);
+            
+                printf("--- TARIFS :\n");
+                printf("Economique: %.2f\t",volCourant->prix_vol.eco);
+                printf("Business: %.2f\t\t",volCourant->prix_vol.bus);
+                printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+                
 
-            printf("--- TARIFS :\n");
-            printf("Economique: %.2f\n",volCourant->prix_vol.eco);
-            printf("Business: %.2f\n",volCourant->prix_vol.bus);
-            printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+                printf("\n--- INFORMATIONS SUR L'AVION ---\n");
+                printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
+                printf("Model de l'avion: %s\n", volCourant->av.model);
 
-            printf("--- INFORMATIONS SUR L'AVION ---\n");
-            printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
-            printf("Model de l'avion: %s\n", volCourant->av.model);
-
-            printf("\n--- INFORMATIONS SUR L'EQUIPAGE ---\n");
-            for (int i = 0; i < volCourant->nbr_crew; i++) {
-                printf("\nMembre %d:", i + 1);
-                printf("Nom: %s", volCourant->equipage[i].nom_complet);
-                printf("Role: %s", volCourant->equipage[i].role);
-                printf("Matricule: %d", volCourant->equipage[i].matricule);
-            }
-            printf("\n===============================================\n");
+                printf("\n--- INFORMATIONS SUR L'EQUIPAGE ---\n");
+                for (int i = 0; i < volCourant->nbr_crew; i++) {
+                    printf("Membre %d:\n", i + 1);
+                    printf("Nom: %s", volCourant->equipage[i].nom_complet);
+                    printf("Role: %s", volCourant->equipage[i].role);
+                    printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
+                }
+                printf("\n===============================================\n");
 
             // saisie des donnees
             printf("Numero de vol: ");
@@ -594,10 +608,9 @@ void modifierVol(ListeVols* L, int numero_vol) {
 
             system("cls");
             printf("\n--- DETAILS DU VOL APRES MODIFICATION ---\n");
-            printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
             printf("%-8d", volCourant->numero_vol);
             printf("%-15s", volCourant->compagnie);
-            printf("%-10s", volCourant->depart);
+            printf("%-15s", volCourant->depart);
             printf("%-15s", volCourant->destination);
             printf("%-15s", volCourant->date_vol);
             printf("%-16s", volCourant->heure_depart);
@@ -605,11 +618,12 @@ void modifierVol(ListeVols* L, int numero_vol) {
             printf("Gate: %s\t", volCourant->gate);
             printf("Terminal: %d\t", volCourant->terminal);
             printf("Statut: %s\n", volCourant->status);
-
-            printf("\n--- TARIFS :\n");
-            printf("Economique: %.2f\n",volCourant->prix_vol.eco);
-            printf("Business: %.2f\n",volCourant->prix_vol.bus);
+        
+            printf("--- TARIFS :\n");
+            printf("Economique: %.2f\t",volCourant->prix_vol.eco);
+            printf("Business: %.2f\t\t",volCourant->prix_vol.bus);
             printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+            
 
             printf("\n--- INFORMATIONS SUR L'AVION ---\n");
             printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
@@ -618,9 +632,9 @@ void modifierVol(ListeVols* L, int numero_vol) {
             printf("\n--- INFORMATIONS SUR L'EQUIPAGE ---\n");
             for (int i = 0; i < volCourant->nbr_crew; i++) {
                 printf("Membre %d:\n", i + 1);
-                printf("Nom de l'equipage: %s\n", volCourant->equipage[i].nom_complet);
-                printf("Role de l'equipage: %s\n", volCourant->equipage[i].role);
-                printf("Matricule de l'equipage: %d\n", volCourant->equipage[i].matricule);
+                printf("Nom: %s", volCourant->equipage[i].nom_complet);
+                printf("Role: %s", volCourant->equipage[i].role);
+                printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
             }
             printf("\n===============================================\n");
 
@@ -646,8 +660,9 @@ void afficherVolsClient(ListeVols* L) {
     }
     Vol* volCourant = L->tete;
     
+    system("cls");
     while (volCourant != NULL) {
-        printf("VOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
+        printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
         printf("%-8d", volCourant->numero_vol);
         printf("%-15s", volCourant->compagnie);
         printf("%-10s", volCourant->depart);
@@ -656,15 +671,17 @@ void afficherVolsClient(ListeVols* L) {
         printf("%-16s", volCourant->heure_depart);
         printf("%s\n", volCourant->heure_arrivee);
 
-        printf("--- INFORMATIONS SUR L'AVION ---\n");
+        printf("\n--- INFORMATIONS SUR L'AVION ---\n");
         printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
         printf("Model de l'avion: %s", volCourant->av.model);
 
         printf("\n--- TARIFS :\n");
         printf("Economique: %.2f\t",volCourant->prix_vol.eco);
-        printf("Business: %.2f\t",volCourant->prix_vol.bus);
+        printf("Business: %.2f\t\t",volCourant->prix_vol.bus);
         printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
-
+        
+        printf("\n===============================================\n");
+        
         volCourant = volCourant->suivant;
     }
     
@@ -674,6 +691,218 @@ void afficherVolsClient(ListeVols* L) {
     fflush(stdin);
 }
 
+int afficherVolsDestination(ListeVols* L, char destination[]) {
+    int found = 0;
+    if (L->tete == NULL) {
+        printf("La liste des vols est vide.\n");
+        return 0;
+    }
+    Vol* volCourant = L->tete;
+
+    system("cls");
+    while (volCourant != NULL) {
+        if (strcmp(volCourant->destination, destination) == 0) {
+            printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
+            printf("%-8d", volCourant->numero_vol);
+            printf("%-15s", volCourant->compagnie);
+            printf("%-10s", volCourant->depart);
+            printf("%-15s", volCourant->destination);
+            printf("%-15s", volCourant->date_vol);
+            printf("%-16s", volCourant->heure_depart);
+            printf("%s\n", volCourant->heure_arrivee);
+
+            printf("\n--- INFORMATIONS SUR L'AVION ---\n");
+            printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
+            printf("Model de l'avion: %s", volCourant->av.model);
+
+            printf("\n--- TARIFS :\n");
+            printf("Economique: %.2f\t",volCourant->prix_vol.eco);
+            printf("Business: %.2f\t\t",volCourant->prix_vol.bus);
+            printf("Premiere Class: %.2f\n",volCourant->prix_vol.pre);
+
+            printf("\n===============================================\n");
+
+            found++;
+        }
+
+        volCourant = volCourant->suivant;
+    }
+
+    if (found==0) {
+        return 0;
+    }else
+        printf("\nNombre de vols disponibles: %d",found);
+        return 1;
+}
+
+// fonction qui trouve un vol par son numero
+Vol* trouverVol(ListeVols* L, int numero_vol) {
+    Vol* ptr;
+    for (ptr = L->tete; ptr != NULL; ptr = ptr->suivant) {
+        if (ptr->numero_vol == numero_vol) {
+            return ptr;
+        }
+    }
+    return NULL; // not found
+}
+
+
+
+void reserverVol(ListeVols* L, char *destination){
+    int found = afficherVolsDestination(L,destination);
+    int numVolRes;
+
+    if (found == 0)
+    {
+        printf("\nAucune vol trouve pour cette destination. (%s)\n",destination);
+        printf("\n**appuyer sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+        return;
+    }
+
+    printf("\nSaisir le numero de vol que vous voulez reserver:  ");
+    scanf("%d", &numVolRes);
+
+    Vol *volRes = trouverVol(L,numVolRes);
+    
+
+    if (volRes == NULL) {
+        system("cls");
+        printf("\nVol introuvable!\n");
+        printf("\n**appuyer sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+        return;
+    }
+
+    if (volRes->nbr_passagers >= volRes->av.capacite) {
+        system("cls");
+        printf("Desole, pas de places disponible dans cette vol.\n");
+        printf("\n**appuyer sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+        return;
+    }
+
+    // Ajouter a la liste
+    if (volRes->Passager == NULL) {
+        volRes->Passager = malloc(sizeof(passagers) * volRes->av.capacite);
+        volRes->Passager->num_passager = 0;
+        volRes->Passager->num_place = 0;
+    }
+
+    system("cls");
+
+    //TEST
+    printf("\nNum vol: %d",volRes->numero_vol);
+    printf("\ndestination: %s",volRes->destination);
+
+    //TEST
+
+    fflush(stdin);
+    printf("\nNom complet: ");
+    scanf("%s",&volRes->Passager[volRes->nbr_passagers].nom_complet);
+    //fgets(volRes->Passager[volRes->nbr_passagers].nom_complet,49,stdin);
+    //volRes->Passager[volRes->nbr_passagers].nom_complet[strcspn(volRes->Passager[volRes->nbr_passagers].nom_complet, "\n")] = '\0';
+
+    printf("\nNumero de passeport: ");
+    scanf("%d",&volRes->Passager->num_passport);
+
+    printf("\nVeuillez choisir une categorie: ");
+    printf("\n--- TARIFS :\n");
+        printf("Economique: %.2f\t",volRes->prix_vol.eco);
+        printf("Business: %.2f\t\t",volRes->prix_vol.bus);
+        printf("Premiere Class: %.2f\n",volRes->prix_vol.pre);
+    printf("ECO: economique, BUS: business, PRE: premier classe \nVotre choix: ");
+    scanf("%s",&volRes->Passager->categorie);
+
+    volRes->nbr_passagers++;
+
+    system("cls");
+    printf("Reservation reussie.\n");
+    printf("\nInformations sur la reservation:\n");
+    printf("\n===============================================\n");
+    printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
+            printf("%-8d", volRes->numero_vol);
+            printf("%-15s", volRes->compagnie);
+            printf("%-10s", volRes->depart);
+            printf("%-15s", volRes->destination);
+            printf("%-15s", volRes->date_vol);
+            printf("%-16s", volRes->heure_depart);
+            printf("%s\n", volRes->heure_arrivee);
+
+            printf("\n--- INFORMATIONS SUR L'AVION ---\n");
+            printf("Capacite de l'avion: %d\n", volRes->av.capacite);
+            printf("Model de l'avion: %s", volRes->av.model);
+
+            printf("\n\nNumero Passager: %d",volRes->Passager[volRes->nbr_passagers].num_passager);
+            printf("\nNom Complet: %s",volRes->Passager[volRes->nbr_passagers].nom_complet);
+            printf("\nNumero Passeport: %d",volRes->Passager[volRes->nbr_passagers].num_passport);
+            printf("\nNumero de Place: %d",volRes->Passager[volRes->nbr_passagers].num_place);
+            printf("\nCategorie: %-3s",volRes->Passager[volRes->nbr_passagers].categorie); 
+
+            printf("\n===============================================\n");
+
+    printf("\n**appuyer sur n'importe quelle touche pour revenir.");
+    while (!kbhit()) {}
+    getch();
+    fflush(stdin);
+
+}
+
+void afficherPassagers(ListeVols *L, int num){
+    Vol *volCourant = L->tete;
+    while (volCourant != NULL) {
+        if (volCourant->numero_vol == num && volCourant->nbr_passagers>0) {
+            break;
+        }
+        volCourant = volCourant->suivant;
+    }
+
+    if (volCourant == NULL)
+    {
+        printf("Vol introuvable.");
+        printf("\n**appuyer sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+    }else{
+        printf("\nVOL\tCompagnie\tDepart\tDestination\tDate de vol\tHeure de depart\tHeure d'arrivee\n");
+        printf("%-8d", volCourant->numero_vol);
+        printf("%-15s", volCourant->compagnie);
+        printf("%-10s", volCourant->depart);
+        printf("%-15s", volCourant->destination);
+        printf("%-15s", volCourant->date_vol);
+        printf("%-16s", volCourant->heure_depart);
+        printf("%s\n", volCourant->heure_arrivee);
+
+        printf("\n--- INFORMATIONS SUR L'AVION ---\n");
+        printf("Capacite de l'avion: %d\n", volCourant->av.capacite);
+        printf("Model de l'avion: %s", volCourant->av.model);
+
+        printf("\n===============================================\n");
+
+        printf("\nPASSAGERS:\n");
+        for (int i = 0; i <= volCourant->nbr_passagers; i++)
+        {
+            printf("\nNumero Passager: %d",volCourant->Passager[i].num_passager);
+            printf("\nNom Complet: %s",volCourant->Passager[i].nom_complet);
+            printf("\nNumero Passeport: %d",volCourant->Passager[i].num_passport);
+            printf("\nNumero de Place: %d",volCourant->Passager[i].num_place);
+            printf("\nCategorie: %-3s",volCourant->Passager[i].categorie);   
+            printf("\n===============================================\n");
+        }
+
+        printf("\n**appuyer sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+    }
+}
 
 
 

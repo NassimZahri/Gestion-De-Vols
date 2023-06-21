@@ -18,6 +18,7 @@ void adminMenu(ListeVols* L) {
         printf("2. Supprimer un vol\n");
         printf("3. Modifier un vol\n");
         printf("4. Affichage des vols\n");
+        printf("5. Affichage des passager\n");
         printf("\n0. Retourner au menu principale\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
@@ -44,6 +45,14 @@ void adminMenu(ListeVols* L) {
             case 4:
                 afficherVols(L);
                 break;
+            case 5: {
+                int num;
+                printf("Entrez le numero de vol : ");
+                scanf("%d", &num);
+                afficherPassagers(L,num);
+                break;
+            }
+            
             case 0:
                 printf("Au revoir !\n");
                 break;
@@ -64,6 +73,7 @@ void userMenu(ListeVols* L) {
         system("cls");
         printf("\n=== USER MENU ===\n");
         printf("1. Afficher Vols\n");
+        printf("2. Reserver un Vol\n");
         printf("\n0. Retourner au menu principale\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
@@ -72,6 +82,14 @@ void userMenu(ListeVols* L) {
             case 1:
                 afficherVolsClient(L);
                 break;
+            case 2: {
+                char destination[50];
+                printf("Entrez la destination : ");
+                scanf("%s", destination);
+                reserverVol(L, destination);
+                break;
+            }
+
             case 0:
                 printf("Au revoir !\n");
                 break;
@@ -133,8 +151,7 @@ int main() {
 
     } while (choix != 0);
 
-    // Free memory and clean up
-    // ...
+    
 
     return 0;
 }
