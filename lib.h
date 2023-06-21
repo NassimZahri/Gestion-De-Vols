@@ -493,9 +493,9 @@ void modifierVol(ListeVols* L, int numero_vol) {
                 printf("\n--- INFORMATIONS SUR L'EQUIPAGE ---\n");
                 for (int i = 0; i < volCourant->nbr_crew; i++) {
                     printf("Membre %d:\n", i + 1);
-                    printf("\nNom: %s", volCourant->equipage[i].nom_complet);
-                    printf("\nRole: %s", volCourant->equipage[i].role);
-                    printf("\nMatricule: %d\n\n", volCourant->equipage[i].matricule);
+                    printf("Nom: %s", volCourant->equipage[i].nom_complet);
+                    printf("Role: %s", volCourant->equipage[i].role);
+                    printf("Matricule: %d\n\n", volCourant->equipage[i].matricule);
                 }
                 printf("\n===============================================\n");
 
@@ -1067,6 +1067,59 @@ void afficherPassagers(ListeVols *L, int num){
         getch();
         fflush(stdin);
     }
+}
+
+
+void supprimerPassager(ListeVols* L, int numero_vol, int num_passager) {
+    Vol* vol = trouverVol(L, numero_vol);
+
+    if (vol == NULL) {
+        printf("Vol introuvable.\n");
+        printf("\n** Appuyez sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+        return;
+    }
+
+    if (vol->Passager == NULL) {
+        printf("Aucun passager dans ce vol.\n");
+        printf("\n** Appuyez sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+        return;
+    }
+
+    int index = -1;
+    for (int i = 0; i < vol->nbr_passagers; i++) {
+        if (vol->Passager[i].num_passager == num_passager) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        printf("Passager introuvable dans ce vol.\n");
+        printf("\n** Appuyez sur n'importe quelle touche pour revenir.");
+        while (!kbhit()) {}
+        getch();
+        fflush(stdin);
+        return;
+    }
+
+    // reculer les elements du tableau
+    for (int i = index; i < vol->nbr_passagers - 1; i++) {
+        vol->Passager[i] = vol->Passager[i + 1];
+    }
+
+    vol->nbr_passagers--;
+
+    printf("Passager supprime avec succes.\n");
+    printf("\n** Appuyez sur n'importe quelle touche pour revenir.");
+    while (!kbhit()) {}
+    getch();
+    fflush(stdin);
 }
 
 

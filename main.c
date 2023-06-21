@@ -19,7 +19,8 @@ void adminMenu(ListeVols* L) {
         printf("\n3. Modifier un vol\n");
         printf("4. Modifier statut d'un vol\n");
         printf("\n5. Affichage des vols\n");
-        printf("6. Affichage des passager\n");
+        printf("\n6. Affichage des passager\n");
+        printf("7. ! Exclure un Passager !\n");
         printf("\n0. Retourner au menu principale\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
