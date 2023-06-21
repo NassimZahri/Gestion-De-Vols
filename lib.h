@@ -684,23 +684,27 @@ void modifierStatusVol(ListeVols *L) {
     printf("Votre choix : ");
     scanf("%d", &choix);
 
+    int changed = 0;
     do{
         switch (choix) {
             case 1:
                 strcpy(vol->status, "A l'heure");
+                changed = 1;
                 break;
             case 2:
                 strcpy(vol->status, "En Retard");
+                changed = 1;
                 break;
             case 3:
                 strcpy(vol->status, "Annule");
+                changed = 1;
                 break;
             default:
                 system("cls");
                 printf("Choix invalide!\n");
                 return;
         }
-    }while(choix != 1 || choix != 2 || choix != 3);
+    }while(changed = 0);
     printf("\nLe statut du vol a ete modifie avec succes.\n");
     sleep(1.5);
 }
