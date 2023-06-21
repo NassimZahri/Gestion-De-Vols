@@ -1122,6 +1122,42 @@ void supprimerPassager(ListeVols* L, int numero_vol, int num_passager) {
     fflush(stdin);
 }
 
+void trouverPassager(ListeVols* L, int num_passager) {
+    int found = 0;  
+
+    Vol* volCourant = L->tete;
+    while (volCourant != NULL) {
+        
+        if (volCourant->Passager != NULL) {
+            
+            for (int i = 0; i < volCourant->nbr_passagers; i++) {
+                
+                if (volCourant->Passager[i].num_passager == num_passager) {
+                    printf("Passager trouve dans le vol numero: %d\n", volCourant->numero_vol);
+                    printf("Informations sur le passager:\n");
+                    printf("Nom: %s\n", volCourant->Passager[i].nom_complet);
+                    printf("Numero de Passport: %d\n", volCourant->Passager[i].num_passport);
+                    printf("\n");
+
+                    found = 1;  
+                }
+            }
+        }
+
+        volCourant = volCourant->suivant;  
+    }
+
+    
+    if (!found) {
+        printf("Passager introuvable dans tous les vols.\n");
+    }
+
+    printf("\n** Appuyez sur n'importe quelle touche pour revenir.");
+    while (!kbhit()) {}
+    getch();
+    fflush(stdin);
+}
+
 
 
 

@@ -20,7 +20,8 @@ void adminMenu(ListeVols* L) {
         printf("4. Modifier statut d'un vol\n");
         printf("\n5. Affichage des vols\n");
         printf("\n6. Affichage des passager\n");
-        printf("7. ! Exclure un Passager !\n");
+        printf("7.  Exclure un Passager \n");
+        printf("8.  Trouver un Passager \n");
         printf("\n0. Retourner au menu principale\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
@@ -55,6 +56,22 @@ void adminMenu(ListeVols* L) {
                 printf("Entrez le numero de vol : ");
                 scanf("%d", &num);
                 afficherPassagers(L,num);
+                break;
+            }
+            case 7: {
+                int numV,numP;
+                printf("Entrez le numero de vol : ");
+                scanf("%d", &numV);
+                printf("Entrew le numero de passager : ");
+                scanf("%d", &numP);
+                supprimerPassager(L,numV,numP);
+                break;
+            }
+            case 8: {
+                int numP;
+                printf("Entrez le numero de passager : ");
+                scanf("%d", &numP);
+                trouverPassager(L,numP);
                 break;
             }
             
