@@ -5,19 +5,23 @@
 #include <conio.h>
 #include "lib.h"
 
-int main() {
-    ListeVols* L = initialiserListe();
+#define ADMIN_ID "admin"
+#define ADMIN_PWD "admin"
+
+void adminMenu(ListeVols* L) {
     int choix;
 
     do {
         system("cls");
-        printf("\n=== MENU ===\n");
+        printf("\n=== ADMIN MENU ===\n");
         printf("1. Ajouter un vol\n");
         printf("2. Supprimer un vol\n");
-        printf("3. Modifier un vol\n");
-        printf("4. Affichage des vols\n");
-        printf("5. Quitter\n");
-        printf("Choix : ");
+        printf("\n3. Modifier un vol\n");
+        printf("4. Modifier statut d'un vol\n");
+        printf("\n5. Affichage des vols\n");
+        printf("6. Affichage des passager\n");
+        printf("\n0. Retourner au menu principale\n");
+        printf("\nChoix : ");
         scanf("%d", &choix);
 
         switch (choix) {
@@ -40,9 +44,20 @@ int main() {
                 break;
             }
             case 4:
-                afficherVols(L);
+                modifierStatusVol(L);
                 break;
             case 5:
+                afficherVols(L);
+                break;
+            case 6: {
+                int num;
+                printf("Entrez le numero de vol : ");
+                scanf("%d", &num);
+                afficherPassagers(L,num);
+                break;
+            }
+            
+            case 0:
                 printf("Au revoir !\n");
                 break;
             default:
@@ -52,10 +67,95 @@ int main() {
                 break;
         }
 
-    } while (choix != 5);
+    } while (choix != 0);
+}
 
-    // Free memory and clean up
-    // ...
+void userMenu(ListeVols* L) {
+    int choix;
+
+    do {
+        system("cls");
+        printf("\n=== USER MENU ===\n");
+        printf("1. Afficher Vols\n");
+        printf("2. Reserver un Vol\n");
+        printf("\n0. Retourner au menu principale\n");
+        printf("\nChoix : ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:
+                afficherVolsClient(L);
+                break;
+            case 2: {
+                char destination[50];
+                printf("Entrez la destination : ");
+                scanf("%s", destination);
+                reserverVol(L, destination);
+                break;
+            }
+
+            case 0:
+                printf("Au revoir !\n");
+                break;
+            default:
+                system("cls");
+                printf("Choix invalide. Veuillez reessayer.\n");
+                sleep(1.5);
+                break;
+        }
+
+    } while (choix != 0);
+}
+
+int main() {
+    ListeVols* L = initialiserListe();
+    int choix;
+    int isAdmin = 0;
+
+    do {
+        system("cls");
+        printf("\n=== MAIN MENU ===\n");
+        printf("1. Admin\n");
+        printf("2. Normal User\n");
+        printf("\n0. Quitter\n");
+        printf("\nChoix : ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1: {
+                char admin_id[20];
+                char admin_pwd[20];
+
+                printf("Admin ID: ");
+                scanf("%s", admin_id);
+                printf("Password: ");
+                scanf("%s", admin_pwd);
+
+                if (strcmp(admin_id, ADMIN_ID) == 0 && strcmp(admin_pwd, ADMIN_PWD) == 0) {
+                    isAdmin = 1;
+                    adminMenu(L);
+                } else {
+                    printf("Identifiant ou mot de passe incorrect.\n");
+                    sleep(1.5);
+                }
+                break;
+            }
+            case 2:
+                userMenu(L);
+                break;
+            case 0:
+                printf("Au revoir !\n");
+                break;
+            default:
+                system("cls");
+                printf("Choix invalide. Veuillez reessayer.\n");
+                sleep(1.5);
+                break;
+        }
+
+    } while (choix != 0);
+
+    
 
     return 0;
 }
