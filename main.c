@@ -16,9 +16,10 @@ void adminMenu(ListeVols* L) {
         printf("\n=== ADMIN MENU ===\n");
         printf("1. Ajouter un vol\n");
         printf("2. Supprimer un vol\n");
-        printf("3. Modifier un vol\n");
-        printf("4. Affichage des vols\n");
-        printf("5. Affichage des passager\n");
+        printf("\n3. Modifier un vol\n");
+        printf("4. Modifier statut d'un vol\n");
+        printf("\n5. Affichage des vols\n");
+        printf("6. Affichage des passager\n");
         printf("\n0. Retourner au menu principale\n");
         printf("\nChoix : ");
         scanf("%d", &choix);
@@ -43,9 +44,12 @@ void adminMenu(ListeVols* L) {
                 break;
             }
             case 4:
+                modifierStatusVol(L);
+                break;
+            case 5:
                 afficherVols(L);
                 break;
-            case 5: {
+            case 6: {
                 int num;
                 printf("Entrez le numero de vol : ");
                 scanf("%d", &num);
